@@ -5,6 +5,7 @@ retrieving objects from a file
 """
 
 import json
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -35,8 +36,8 @@ class FileStorage:
         Args:
             obj: An instance to store.
         """
-        key = "{}.{}".format(obj.__class.__name, obj.id)
-        FileStorage.__objects[key] = obj
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        self.__objects[key] = obj
 
     def save(self):
         """Serializes __objects to the JSON file"""
@@ -50,13 +51,19 @@ class FileStorage:
     def reload(self):
         """Deserializes the JSON file to __objects"""
         try:
-            with open(FileStorage.__file_path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-                for key, obj_dict in data.items():
-                    class_name = obj_dict['__class__']
-                    obj = globals()[class_name](**obj_dict)
-                    FileStorage.__objects[key] = obj
+            with open(self.__file_path, 'r', encoding='utf-8') as f:
+                obj_dict = json.load(f)
+                for key, obj in obj_dict.items():
+                    class_name = obj['__class__']
+                    del obj["__class__"]
+                    self.__objects[key] = globals()[class_name](**obj)
         except FileNotFoundError:
             pass
         
-
+    def classes(self):
+        """
+        Returns a dictionary of classes that can be managed by the storage
+        """
+        return {
+            "BaseModel": BaseModel
+        }
