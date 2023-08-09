@@ -8,6 +8,7 @@ import cmd
 import shlex
 from models.base_model import BaseModel
 from models import storage
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -30,7 +31,7 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """
-        Creates a new instance of BaseModel, saving it to the JSON file
+        Creates a new instance of BaseModel/User, saving it to the JSON file
         and print the id
         Usage: create <class name>
         """

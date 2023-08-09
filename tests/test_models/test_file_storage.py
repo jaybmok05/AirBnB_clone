@@ -11,11 +11,11 @@ from models.base_model import BaseModel
 class TestFileStorage(unittest.TestCase):
     """Test suit for the FileStorage class"""
 
-    def setUP(self):
+    def setUp(self):
         """Set up a new FileStorage instance for each test"""
         self.storage = FileStorage()
 
-    def teaDown(self):
+    def tearDown(self):
         """Clean up by removing the JSON file created during testing"""
         if os.path.exists(self.storage._FileStorage__file_path):
             os.remove(self.storage._FileStorage__file_path)
@@ -36,6 +36,7 @@ class TestFileStorage(unittest.TestCase):
         """Test the all() method of FileStorage"""
         all_obj = self.storage.all()
         self.assertIsInstance(all_obj, dict)
+        self.assertEqual(len(all_obj), len(self.storage._FileStorage__objects))
 
     def test_new_method(self):
         """Test the new() method of FileStorage"""
