@@ -1,6 +1,7 @@
+#!/usr/bin/python3
 """Defining a BaseModel class"""
 from datetime import datetime
-import uuid
+from uuid import uuid4
 
 
 class BaseModel(object):
@@ -13,18 +14,32 @@ class BaseModel(object):
         updated_at (datetime): the current datetime when an instance is created
         and it will be updated every time you change your object
     """
-    def __int__(self):
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = self.created_at
+    def __init__(self, *args, **kwargs):
+        """
+        Constructor function to instatiate
+        class instance's attributes
+        """
+        if kwargs is not None and len(kwargs) > 0:
+            for key,value in kwargs.items():
+                if key != '__class__':
+                    if key == 'created_at' or key == 'updated_at':
+                        value = datetime.fromisoformat(value)
+                else:
+                    continue
+                setattr(self, key, value)
+            return
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = self.created_at
 
     def __str__(self):
         """
         this function should print:
         [<class name>] (<self.id>) <self.__dict__>
         """
-        print("[{}] ({}) {}".format(self.__class__.__name__,
-                                    self.id, self.__dict__))
+        return "[{}] ({}) {}".format(self.__class__.__name__,
+                                         self.id, self.__dict__)
 
     def save(self):
         """A function that updates the public instance
