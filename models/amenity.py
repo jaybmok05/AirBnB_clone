@@ -6,7 +6,7 @@ from BaseModel
 from models.base_model import BaseModel
 
 
-class State(BaseModel):
+class Amenity(BaseModel):
     """A class for amenity object
 
     Attributes:

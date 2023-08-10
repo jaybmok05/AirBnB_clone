@@ -13,5 +13,5 @@ class City(BaseModel):
         name(string): the name of the state
         state_id(string): it will be a unique id for the city
     """
-    state_id = State.id
+    state_id = ""
     name = ""
