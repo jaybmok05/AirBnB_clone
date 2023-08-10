@@ -2,6 +2,7 @@
 """Defining a BaseModel class"""
 from datetime import datetime
 from uuid import uuid4
+from models import storage
 
 
 class BaseModel(object):
@@ -13,6 +14,15 @@ class BaseModel(object):
         created_at (datetime): the current datetime when an instance is created
         updated_at (datetime): the current datetime when an instance is created
         and it will be updated every time you change your object
+
+    Methods:
+        __init__: constructor function
+        __str__: this function should print:
+        [<class name>] (<self.id>) <self.__dict__>
+        save(): updates the public instance attribute updated_at
+        with the current datetime
+        to_dict(): returns a dictionary containing all keys/values of
+        __dict__ of the instance
     """
     def __init__(self, *args, **kwargs):
         """
@@ -32,7 +42,6 @@ class BaseModel(object):
             self.id = str(uuid4())
             self.created_at = datetime.now()
             self.updated_at = self.created_at
-            from models import storage
             storage.new(self)
 
     def __str__(self):
@@ -48,7 +57,6 @@ class BaseModel(object):
         attribute updated_at with the current datetime
         """
         self.updated_at = datetime.now()
-        from models import storage
         storage.save()
 
     def to_dict(self):
