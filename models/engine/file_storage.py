@@ -6,6 +6,7 @@ retrieving objects from a file
 
 import json
 from models.base_model import BaseModel
+from models.user import User
 
 
 class FileStorage:
@@ -65,5 +66,6 @@ class FileStorage:
         Returns a dictionary of classes that can be managed by the storage
         """
         return {
-            "BaseModel": BaseModel
+            "BaseModel": BaseModel,
+            "User": User
         }
