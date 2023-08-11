@@ -101,7 +101,7 @@ class HBNBCommand(cmd.Cmd):
         """
         args = shlex.split(arg)
         if not args:
-            print([str(obj) for obj in storage.all().values()])
+            print([str(obj) for key, obj in storage.all().values()])
         elif args[0] in storage.classes():
             print([str(obj) for key, obj in storage.all().items() if key.startswith(args[0])])
         else:
@@ -138,6 +138,17 @@ class HBNBCommand(cmd.Cmd):
         instance = storage.all()[key]
         setattr(instance, args[2], args[3])
         instance.save()
+
+    def precmd(self, line):
+        """
+        This method is called before executing each command
+        It modifies the line if necessary
+        """
+        if line.endswith(".all()"):
+            parts = line.split(".")
+            if len(parts) == 2:
+                return "all " + parts[0]
+        return line
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
