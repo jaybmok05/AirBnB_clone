@@ -139,6 +139,23 @@ class HBNBCommand(cmd.Cmd):
         setattr(instance, args[2], args[3])
         instance.save()
 
+    def do_count(self, arg):
+        """
+        This command will return number of <class name>
+        in the file storage
+        """
+        args = shlex.split(arg)
+        if not args:
+            print("** class name missing **")
+        elif args[0] in storage.classes():
+            counted = 0
+            for key, obj in storage.all().items():
+                if key.startswith(args[0]):
+                    counted += 1
+            print(int(counted))
+        else:
+            print("** class name doesnt exist **")
+
     def precmd(self, line):
         """
         This method is called before executing each command
@@ -148,6 +165,11 @@ class HBNBCommand(cmd.Cmd):
             parts = line.split(".")
             if len(parts) == 2:
                 return "all " + parts[0]
+        if line.endswith(".count()"):
+            parts = line.split(".")
+            if len(parts) == 2:
+                return "count " + parts[0]
+
         return line
 
 if __name__ == '__main__':
