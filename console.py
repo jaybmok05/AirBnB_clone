@@ -190,7 +190,7 @@ class HBNBCommand(cmd.Cmd):
                 if len(command_parts) == 2 and command_parts[1] == "show":
                     # Extract class name and instance id from the line
                     class_name, instance_id = command_parts[0],\
-                                              prts[1].rstrip(")")
+                                              parts[1].rstrip(")")
                     # Format the command in the show format
                     return f"show {class_name} {instance_id}"
                 elif len(command_parts) == 2 and command_parts[1] == "destroy":
