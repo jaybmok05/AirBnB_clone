@@ -115,28 +115,26 @@ class HBNBCommand(cmd.Cmd):
         Usage: update <class name> <id> <attribute name> "<attribute value>"
         """
         args = shlex.split(arg)
-        if not args:
-            print("** class name missing **")
+        if len(args) < 4:
+            print("** Usage: update <class name> <id> <attribute name> <attribute value **")
             return
-        if args[0] not in storage.classes():
+
+        class_name = args[0]
+        instance_id = args[1]
+        attribute_name = args[2]
+        attribute_value = args[3]
+
+        if class_name not in storage.classes():
             print("** class doesn't exist **")
             return
-        if len(args) < 2:
-            print("** instance id missing **")
-            return
-        key = "{}.{}".format(args[0], args[1])
+
+        key = "{}.{}".format(class_name, instance_id)
         if key not in storage.all().keys():
             print("** no instance found **")
             return
-        if len(args) < 3:
-            print("** attribute name missing **")
-            return
-        if len(args) < 4:
-            print("** value missing **")
-            return
 
         instance = storage.all()[key]
-        setattr(instance, args[2], args[3])
+        setattr(instance, attribute_name, attribute_value)
         instance.save()
 
     def do_count(self, arg):
@@ -165,10 +163,22 @@ class HBNBCommand(cmd.Cmd):
             parts = line.split(".")
             if len(parts) == 2:
                 return "all " + parts[0]
+
         if line.endswith(".count()"):
             parts = line.split(".")
             if len(parts) == 2:
                 return "count " + parts[0]
+
+        if line.endswith(")"):
+            parts = line.split("(")
+            if len(parts) == 2:
+                command_parts = parts[0].split(".")
+                if len(command_parts) == 2 and command_parts[1] == "update":
+                    class_name = command_parts[0]
+                    args = parts[1].rstrip(")").split(", ")
+                    if len(args) == 3:
+                        instance_id, attribute_name, attribute_value = args
+                        return f"update {class_name} {instance_id} {attribute_name} {attribute_value}"
 
         return line
 
