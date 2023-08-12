@@ -10,6 +10,6 @@ class Amenity(BaseModel):
     """A class for amenity object
 
     Attributes:
-        name(string): the name of the state 
+            name(string): the name of the state
     """
     name = ""

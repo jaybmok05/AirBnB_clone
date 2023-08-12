@@ -40,7 +40,7 @@ class HBNBCommand(cmd.Cmd):
         and print the id
         Usage: create <class name>
         """
-        if not  arg:
+        if not arg:
             print("** class name missing **")
             return
         try:
@@ -103,20 +103,22 @@ class HBNBCommand(cmd.Cmd):
         if not args:
             print([str(obj) for key, obj in storage.all().values()])
         elif args[0] in storage.classes():
-            print([str(obj) for key, obj in storage.all().items() if key.startswith(args[0])])
+            print([str(obj) for key, obj in storage.all().items()
+                  if key.startswith(args[0])])
         else:
             print("** class doesn't exist **")
 
     def do_update(self, arg):
         """
-        Update an instance based on the class name and id by adding or 
+        Update an instance based on the class name and id by adding or
         updating attribute, the changes are saved into the JSON file
-        
+
         Usage: update <class name> <id> <attribute name> "<attribute value>"
         """
         args = shlex.split(arg)
         if len(args) < 4:
-            print("** Usage: update <class name> <id> <attribute name> <attribute value **")
+            print("** Usage: update <class name> <id> \
+                    <attribute name> <attribute value **")
             return
 
         class_name = args[0]
@@ -178,9 +180,25 @@ class HBNBCommand(cmd.Cmd):
                     args = parts[1].rstrip(")").split(", ")
                     if len(args) == 3:
                         instance_id, attribute_name, attribute_value = args
-                        return f"update {class_name} {instance_id} {attribute_name} {attribute_value}"
+                        return f"update {class_name} {instance_id} \
+                                        {attribute_name} {attribute_value}"
 
+        if line.endswith(")"):
+            parts = line.split("(")
+            if len(parts) == 2:
+                command_parts = parts[0].split(".")
+                if len(command_parts) == 2 and command_parts[1] == "show":
+                    # Extract class name and instance id from the line
+                    class_name, instance_id = command_parts[0],\
+                                              prts[1].rstrip(")")
+                    # Format the command in the show format
+                    return f"show {class_name} {instance_id}"
+                elif len(command_parts) == 2 and command_parts[1] == "destroy":
+                    class_name, instance_id = command_parts[0],\
+                                              parts[1].rstrip(")")
+                    return f"destroy {class_name} {instance_id}"
         return line
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()

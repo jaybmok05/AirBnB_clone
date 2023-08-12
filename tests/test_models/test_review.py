@@ -32,5 +32,6 @@ class TestReview(unittest.TestCase):
         self.assertEqual(review.user_id, "6598")
         self.assertEqual(review.text, "Acc 6598: Awaiting your arival")
 
+
 if __name__ == "__main__":
     unittest.main()
