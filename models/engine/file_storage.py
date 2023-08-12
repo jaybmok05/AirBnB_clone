@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """
-Defines file storage class that enables saving and 
+Defines file storage class that enables saving and
 retrieving objects from a file
 """
 
@@ -16,7 +16,7 @@ from models.review import Review
 
 class FileStorage:
     """
-    A class for serializing instances to a JSON file and 
+    A class for serializing instances to a JSON file and
     deserializing JSON file to instances.
 
     Private class attributes:
@@ -65,7 +65,7 @@ class FileStorage:
                     self.__objects[key] = globals()[class_name](**obj)
         except FileNotFoundError:
             pass
-        
+
     def classes(self):
         """
         Returns a dictionary of classes that can be managed by the storage

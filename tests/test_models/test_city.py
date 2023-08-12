@@ -11,7 +11,7 @@ class TestCity(unittest.TestCase):
 
     def test_city_instance(self):
         """Tests City instance creation and attributes"""
-        
+
         city = City()
         self.assertIsInstance(city, City)
         self.assertEqual(city.state_id, "")
@@ -22,12 +22,13 @@ class TestCity(unittest.TestCase):
 
     def test_city_attributes(self):
         """Tests City attributes"""
-        
+
         city = City()
         city.state_id = "23568"
         city.name = "Cleveland"
         self.assertEqual(city.state_id, "23568")
         self.assertEqual(city.name, "Cleveland")
+
 
 if __name__ == "__main__":
     unittest.main()

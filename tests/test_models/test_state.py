@@ -8,7 +8,7 @@ from datetime import datetime
 
 class TestState(unittest.TestCase):
     """Test cases for the State class"""
-    
+
     def test_state_instance(self):
         """Tests State attributes and instance creation"""
         state = State()
@@ -23,6 +23,7 @@ class TestState(unittest.TestCase):
         state = State()
         state.name = "Ohio"
         self.assertEqual(state.name, "Ohio")
+
 
 if __name__ == "__main__":
     unittest.main()

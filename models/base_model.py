@@ -30,7 +30,7 @@ class BaseModel(object):
         class instance's attributes
         """
         if kwargs is not None and len(kwargs) > 0:
-            for key,value in kwargs.items():
+            for key, value in kwargs.items():
                 if key != '__class__':
                     if key == 'created_at' or key == 'updated_at':
                         value = datetime.fromisoformat(value)
@@ -50,7 +50,7 @@ class BaseModel(object):
         [<class name>] (<self.id>) <self.__dict__>
         """
         return "[{}] ({}) {}".format(self.__class__.__name__,
-                                         self.id, self.__dict__)
+                                     self.id, self.__dict__)
 
     def save(self):
         """A function that updates the public instance
@@ -65,7 +65,7 @@ class BaseModel(object):
         """
         return {
             **self.__dict__,
-            '__class__':self.__class__.__name__,
+            '__class__': self.__class__.__name__,
             'created_at': self.created_at.isoformat(),
             'updated_at': self.updated_at.isoformat()
         }

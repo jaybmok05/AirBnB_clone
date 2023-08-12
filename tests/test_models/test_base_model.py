@@ -34,7 +34,8 @@ class TestBaseModel(unittest.TestCase):
 
     def test_str_method(self):
         """Test the string representation of a BaseModel instance"""
-        desired = "[BaseModel] ({}) {}".format(self.base_model.id, self.base_model.__dict__)
+        desired = "[BaseModel] ({}) {}".format(self.base_model.id,
+                                               self.base_model.__dict__)
         self.assertEqual(str(self.base_model), desired)
 
 
