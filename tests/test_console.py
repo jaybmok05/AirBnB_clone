@@ -29,8 +29,15 @@ class TestConsole(unittest.TestCase):
 #            output = f.getvalue()
 #            self.assertIn("Documented commands (type help <topic>):", output)
 
-    def test_create_with_valid_class(self):
-        """Tests creating an instance of a valid class"""
+    def test_empty_line(self):
+        """Handling of an empty line"""
+        with patch('sys.stdout', new=StringIO()) as f:
+            self.console.onecmd("")
+            output = f.getvalue()
+            self.assertEqual(output, "")
+
+    def test_create_base_model(self):
+        """Tests creating an instance of a BaseModel class"""
         with patch('sys.stdout', new=StringIO()) as f:
             self.console.onecmd("create BaseModel")
             output = f.getvalue().strip()
@@ -85,12 +92,12 @@ class TestConsole(unittest.TestCase):
             output = f.getvalue().strip()
             self.assertEqual(output, "** class doesn't exist **")
 
-    def test_show_nonexisting_instance(self):
-        """Tests trying to display an nonexistent instance of a valid class"""
+    def test_show_base_model(self):
+        """Tests the show command for BaseModel no instance id is passed"""
         with patch('sys.stdout', new=StringIO()) as f:
-            self.console.onecmd("show BaseModel 56568")
+            self.console.onecmd("show BaseModel")
             output = f.getvalue().strip()
-            self.assertEqual(output, "** no instance found **")
+            self.assertEqual(output, "** instance id missing **")
 
     def test_destroy_with_valid_class_and_id(self):
         """Tests destroying an instance with a valid class name and id"""
