@@ -3,14 +3,14 @@ header
 {
 	width: 100%;
 	height: 70px;
-	border-bottom: 1px #CCCCCC;
+	border-bottom: solid 1px #CCCCCC;
 	padding-left: 20px;
 	background-color: #fff;
 	display: flex;
 	align-items: center;
 }
 
-header div#header-logo
+header #header-logo
 {
 	width: 142px;
 	height: 60px;
