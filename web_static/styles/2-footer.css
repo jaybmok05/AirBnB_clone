@@ -6,5 +6,6 @@ footer
 	background-color: #00FF00;
 	position: fixed;
 	bottom: 0px;
+	text-align: center;
 	line-height: 30px;
 }
